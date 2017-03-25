@@ -1,9 +1,12 @@
 
 var express = require('express');
+var SerialPort = require('serialport');
 
 var app = express();
 
 var server = app.listen(process.env.PORT || 3000, listen);
+
+var serialport;
 
 function listen() {
   var host = server.address().address;
@@ -32,11 +35,29 @@ io.sockets.on('connection',
         socket.broadcast.emit('mouse', data);
 
         // io.sockets.emit('message', "this goes to everyone");
-
       }
     );
 
+   socket.on('arduino',
+
+    function(data){
+        serialport = new SerialPort("COM4", { baudrate: 9600 });
+
+        serialport.on('open', function(){
+          console.log('Serial Port Opend');
+          serialport.on('data', function(data){
+              console.log(data[0]);
+          });
+
+          serialport.on('close', function(){
+              console.log('Out');
+          })
+        });
+      }
+      );
+
     socket.on('disconnect', function() {
+      if(serialport.isOpen())serialport.close();
       console.log("Client has disconnected");
     });
   }

@@ -22,6 +22,10 @@ function draw() {
 
 }
 
+function mousePressed(){
+  socket.emit('arduino', {});
+}
+
 function sendmouse(xpos, ypos) {
   console.log("sendmouse: " + xpos + " " + ypos);
 
