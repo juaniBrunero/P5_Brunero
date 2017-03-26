@@ -1,4 +1,5 @@
 var socket;
+var but;
 
 function setup() {
   createCanvas(400, 400);
@@ -6,33 +7,15 @@ function setup() {
 
   socket = io.connect('http://localhost:3000');
 
-  socket.on('mouse',
+  but = createButton("Conectar Arduino");
+  but.position(20, 420);
+  but.mousePressed(conectar);
 
-    function(data) {
-      console.log("Got: " + data.x + " " + data.y);
-
-      fill(0,0,255);
-      noStroke();
-      ellipse(data.x, data.y, 20, 20);
-    }
-  );
+  socket.on('noArduino', function(data){
+    console.log("Imposible conectar");
+  })
 }
 
-function draw() {
-
-}
-
-function mousePressed(){
-  socket.emit('arduino', {});
-}
-
-function sendmouse(xpos, ypos) {
-  console.log("sendmouse: " + xpos + " " + ypos);
-
-  var data = {
-    x: xpos,
-    y: ypos
-  };
-
-  socket.emit('mouse',data);
+function conectar(){
+  socket.emit('arduino', {id: "COM3"});
 }
