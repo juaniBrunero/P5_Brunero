@@ -35,3 +35,6 @@
 [0228/223741.951:WARNING:in_range_cast.h(38)] value 2847143041882 out of range
 [0228/223741.951:WARNING:in_range_cast.h(38)] value 2847143042256 out of range
 [0228/223741.951:WARNING:in_range_cast.h(38)] value 2847143038478 out of range
+[0325/232214.839:ERROR:file_io_win.cc(163)] CreateFile C:\Program Files (x86)\temp\settings.dat: Acceso denegado. (0x5)
+[0325/232214.905:ERROR:registration_protocol_win.cc(83)] TransactNamedPipe: Ha terminado la canalización. (0x6D)
+[0325/232214.905:ERROR:crashpad_win.cc(223)] Crashpad handler failed to start, crash reporting disabled

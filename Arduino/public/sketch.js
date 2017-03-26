@@ -17,5 +17,5 @@ function setup() {
 }
 
 function conectar(){
-  socket.emit('arduino', {id: "COM3"});
+  socket.emit('arduino', {id: "COM4"});
 }

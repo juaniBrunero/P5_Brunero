@@ -30,14 +30,11 @@ io.sockets.on('connection',
   // io.sockets.emit('message', "this goes to everyone");
   socket.on('arduino', function(data){
     SerialPort.list(function (err, ports) {
-    var disponible = false;
     ports.forEach(function(port) {
-      disponible = (port.comName == data.id) || disponible;
-      });
-      if(disponible){
+      if(port.comName == data.id){
         conectar(data.id);
-        break;
       }
+      });
     });
   });
 
