@@ -1,14 +1,52 @@
 
 function setup() {
-  var arr;
-  var cant = 1000000;
+  generarYordenar();
+  frameRate(1);
+}
 
-  arr = new Array(cant);
+function draw(){
+  generarYordenar();
+}
+
+function quickSort(a, lo, hi){
+  var pivot = a[round((hi + lo)/2)];
+
+  var i = lo;
+  var j = hi;
+
+  while(i < j){
+    while(a[i] < pivot){
+      i += 1;
+    }
+    while(a[j] > pivot){
+      j -= 1;
+    }
+    if(i <= j){
+      swap(a, i, j);
+      i += 1;
+      j -= 1;
+    }
+  }
+  if(lo < j) quickSort(a, lo, j);
+  if(hi > i) quickSort(a, i, hi);
+
+}
+
+function swap(a, f, g){
+  var temp = a[f];
+  a[f] = a[g];
+  a[g] = temp;
+}
+
+function generarYordenar(){
+  var cant = floor(random(10000));
+  var arr = new Array(cant);
+
   for (var i = 0; i < cant; i++) {
     arr[i] = floor(random(100));
   }
 
-  //console.log(arr);
+  // console.log(arr);
 
   quickSort(arr, 0, arr.length-1);
 
@@ -18,34 +56,11 @@ function setup() {
     esta = esta && (arr[i] <= arr[i+1]);
   }
 
-  //console.log(arr);
+  // console.log(arr);
+  console.log(cant);
   console.log(esta);
-
 }
 
-function quickSort(a, lo, hi){
-  if(lo < hi){
-    var p = partition(a, lo, hi);
-    quickSort(a, lo   , p - 1);
-    quickSort(a, p + 1, hi);
-  }
-}
-
-function partition(a, lo, hi){
-  var pivot = a[hi];
-  var i = lo-1;
-  for (var j = lo; j < hi; j++) {
-    if(a[j] <= pivot){
-      i = i + 1;
-      swap(a, i, j);
-    }
-  }
-  swap(a, i+1, hi);
-  return i+1;
-}
-
-function swap(a, f, g){
-  var temp = a[f];
-  a[f] = a[g];
-  a[g] = temp;
+function mousePressed(){
+  generarYordenar();
 }
