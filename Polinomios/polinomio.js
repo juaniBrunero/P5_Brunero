@@ -49,14 +49,13 @@ Polinomio.prototype.mostrar = function(posX, posY){
   var txt = "";
   for (var i = 0; i < t.length; i++) {
     if(i == 0 && t[i].x > 0){
-      txt +=               abs(t[i].x) + "x^" + t[i].y + " ";
-    }else if(t[i].x != 0){
-      txt += signo(t[i]) + abs(t[i].x) + "x^" + t[i].y + " ";
+      txt +=               abs(t[i].x) + "x^" + t[i].y;
+    }else if(t[i].y != 0 && t[i].x != 0){
+      txt += signo(t[i]) + abs(t[i].x) + "x^" + t[i].y;
+    }else if(t[i].y == 0){
+      txt += signo(t[i]) + abs(t[i].x);
     }
   }
-  noStroke();
-  fill(255);
-  textSize(20);
   text(txt, posX, posY);
 }
 
@@ -72,5 +71,39 @@ function signo(a){
 
 function suma(a, b){
   var pol = new Polinomio();
+  var liA = a.lista();
+  var liB = b.lista();
+  var i = 0;
+  var j = 0;
+  while(i < liA.length && j < liB.length){
+    if(liA[i].y == liB[j].y){
+      pol.agregar(liA[i].x + liB[j].x, liA[i].y);
+      i++;
+      j++;
+    }else if(liA[i].y > liB[j].y){
+      pol.agregar(liA[i].x, liA[i].y);
+      i++;
+    }else if(liA[i].y < liB[j].y){
+      pol.agregar(liB[j].x, liB[j].y);
+      j++;
+    }
+  }
+  while(i < liA.length){
+    pol.agregar(liA[i].x, liA[i].y);
+    i++;
+  }
+  while(j < liB.length){
+    pol.agregar(liB[j].x, liB[j].y);
+    j++;
+  }
+  return pol;
+}
+
+function escalar(a, es){
+  var pol = new Polinomio();
+  var liP = a.lista();
+  for (var i = 0; i < liP.length; i++) {
+    pol.agregar(liP[i].x * es, liP[i].y);
+  }
   return pol;
 }
