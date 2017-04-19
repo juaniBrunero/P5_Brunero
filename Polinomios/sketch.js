@@ -3,23 +3,24 @@ var pol2;
 var pol3;
 
 function setup() {
+  createCanvas(600, 600);
+
+  background(51);
+
   pol1 = new Polinomio();
   for (var i = 0; i < 4; i++) {
-    var n = new Numero(ceil(random(-4, 4)));
-    pol1.cf.push(n);
+    pol1.agregar(2, 5-i);
   }
 
-  pol2 = new Polinomio(1);
-  for (var i = 0; i < 7; i++) {
-    var n = new Numero(floor(random(-4, 4)));
-    pol2.cf.push(n);
+  pol2 = new Polinomio();
+  for (var i = 0; i < 4; i++) {
+    pol2.agregar(-2, 5-i);
   }
 
-  pol3 = sumarPol(pol1, pol2);
+  pol3 = new Polinomio();
+  pol3 = suma(pol1, pol2);
 
-  console.log(pol1.mostrar());
-  console.log(pol2.mostrar());
-  console.log(pol3.mostrar());
-
-  noLoop();
+  pol1.mostrar(20, 20);
+  pol2.mostrar(20, 50);
+  pol3.mostrar(20, 80);
 }

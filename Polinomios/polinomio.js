@@ -1,66 +1,76 @@
+function Termino(c, e){
+  this.coef = c;
+  this.expo = e;
+}
+
+Termino.prototype.obtCoef = function(){
+  return this.coef;
+}
+
+Termino.prototype.obtExpo = function(){
+  return this.expo;
+}
+
+Termino.prototype.vectorizado = function(){
+  return createVector(this.coef, this.expo);
+}
+
 function Polinomio(){
-  this.cf = [];
+  this.terminos = [];
 }
 
-Polinomio.prototype.mostrar = function () {
-  var txt = "";
-  var ant = false;
-  for (var i = this.cf.length-1; i >= 0; i--) {
-    if(!this.cf[i].mostarNum() === false){
-      if(i != this.cf.length-1)if(ant)txt += "+ ";
-      if(i != 0){
-        txt += this.cf[i].mostarNum() + "X^" + i;
-      }else{
-        txt += this.cf[i].mostarNum();
+Polinomio.prototype.agregar = function (coef, expo) {
+  this.terminos.push(new Termino(coef, expo));
+}
+
+Polinomio.prototype.ordenar = function(){
+  for (var i = 0; i < this.terminos.length-1; i++) {
+    for (var j = i+1; j < this.terminos.length; j++) {
+      if(this.terminos[i].obtExpo() < this.terminos[j].obtExpo()){
+        var temp = this.terminos[j];
+        this.terminos[j] = this.terminos[i];
+        this.terminos[i] = temp;
       }
-      txt += " ";
-      ant = true;
     }
   }
-  return txt;
 }
 
-function Numero(re, im=0){
-  this.a = re;
-  this.i = im;
+Polinomio.prototype.lista = function () {
+  var ar = [];
+  this.ordenar();
+  for (var i = 0; i < this.terminos.length; i++) {
+    ar.push(this.terminos[i].vectorizado());
+  }
+  return ar;
 }
 
-Numero.prototype.mostarNum = function () {
+Polinomio.prototype.mostrar = function(posX, posY){
+  var t = this.lista();
   var txt = "";
-  if(this.a == 0 && this.i == 0){
-    return false;
+  for (var i = 0; i < t.length; i++) {
+    if(i == 0 && t[i].x > 0){
+      txt +=               abs(t[i].x) + "x^" + t[i].y + " ";
+    }else if(t[i].x != 0){
+      txt += signo(t[i]) + abs(t[i].x) + "x^" + t[i].y + " ";
+    }
+  }
+  noStroke();
+  fill(255);
+  textSize(20);
+  text(txt, posX, posY);
+}
+
+function signo(a){
+  if(a.x > 0){
+    return " + "
+  }else if(a.x < 0){
+    return " - "
   }else{
-    if(this.a != 0){
-      txt += this.a + " ";
-    }
-    if(this.i != 0){
-      txt += "(" + txt + this.i + "i)";
-    }
-    return txt;
+    return ""
   }
 }
 
-function sumarPol(p1, p2){
-  var pN = new Polinomio();
-  var i = 0;
-  while(p1.cf[i] != undefined || p2.cf[i] != undefined){
-    var suma = 0;
-    if(p1.cf[i] == undefined){
-      suma = p2.cf[i];
-    }else if(p2.cf[i] == undefined){
-      suma = p1.cf[i];
-    }else{
-      suma = sumaNum(p1.cf[i], p2.cf[i]);
-    }
-    pN.cf.push(suma);
-
-    i++;
-  }
-
-  return pN;
-}
-
-function sumaNum(a, b){
-  c = new Numero(a.a + b.a, a.i + b.i);
-  return c;
+function suma(a, b){
+  var pol = new Polinomio();
+  return pol;
 }
