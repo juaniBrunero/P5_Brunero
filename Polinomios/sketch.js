@@ -2,8 +2,19 @@ var pol1;
 var pol2;
 var pol3;
 
+var but;
+var input;
+
 function setup() {
   createCanvas(600, 600);
+
+  input = createInput();
+  input.position(20, 600);
+
+
+  but = createButton("text");
+  but.position(20, 20);
+  but.mousePressed(greed);
 
   background(51);
 
@@ -37,4 +48,8 @@ function setup() {
 
   text("Escalar", 10, 170);
   pol3.mostrar(100, 170);
+}
+
+function greed(){
+  console.log("A");
 }
